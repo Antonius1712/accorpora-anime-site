@@ -13,9 +13,9 @@ const SingleAnime = async ({ params: { mal_id } }) => {
                 <div className="flex flex-col justify-center items-center">
                     <Image className="w-full rounded object-cover max-h-96" src={data.images.webp.image_url} layout="responsive" width={1600} height={900} />
                     <div className="flex justify-start items-center text-color-secondary gap-4 py-4">
-                        <p className="whitespace-nowrap rounded-full bg-color-accent px-4  py-2">Score {data.score}</p>
-                        <p className="whitespace-nowrap rounded-full bg-color-accent px-4  py-2">Rank #{data.rank}</p>
-                        <p className="whitespace-nowrap rounded-full bg-color-accent px-4  py-2">Popularity #{data.popularity}</p>
+                        <p className="badge-accent">Score {data.score}</p>
+                        <p className="badge-accent">Rank #{data.rank}</p>
+                        <p className="badge-accent">Popularity #{data.popularity}</p>
                     </div>
                 </div>
                 <div>
