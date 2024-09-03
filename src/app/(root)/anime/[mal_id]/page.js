@@ -3,15 +3,16 @@ import { JikanApi } from "@/app/libs/api"
 import CollectionButton from "@/components/AnimeList/CollectionButton"
 import { Auth } from "@/app/libs/auth"
 import prisma from "@/app/libs/prisma"
+import CommentBox from "@/components/Comment/CommentBox"
 
 const SingleAnime = async ({ params: { mal_id } }) => {
     const { data } = await JikanApi(`anime/${mal_id}`)
     const user = await Auth();
-    const collection = await prisma.collection.findFirst({ 
-        where: { 
-            user_email: user?.email, 
+    const collection = await prisma.collection.findFirst({
+        where: {
+            user_email: user?.email,
             mal_id: mal_id
-        } 
+        }
     });
 
     return (
@@ -21,7 +22,7 @@ const SingleAnime = async ({ params: { mal_id } }) => {
             </h3>
             {
                 user
-                    ? !collection 
+                    ? !collection
                         ? <CollectionButton mal_id={mal_id} user_email={user?.email} judul_anime={data.title} img_anime={data.images.webp.image_url} />
                         : <p className="text-color-accent">Already in Collection</p>
                     : ''
@@ -43,12 +44,37 @@ const SingleAnime = async ({ params: { mal_id } }) => {
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col py-4 gap-2 ">
-                <h3 class="text-xl text-color-primary">{data.duration} | {data.rating}</h3>
-                <p class="text-color-primary">
+            <div className="flex flex-col py-4 gap-2 ">
+                <h3 className="text-xl text-color-primary">{data.duration} | {data.rating}</h3>
+                <p className="text-color-primary">
                     {data.synopsis}
                 </p>
-                <a class="text-color-accent underline" href={data.url}>official website</a>
+                <a className="text-color-accent underline" href={data.url}>official website</a>
+            </div>
+
+            <div className="bg-color-primary rounded-md p-4 flex flex-col">
+                <p className="text-xl">Comments</p>
+                <div className="border-t border-color-dark">
+                    <div className="bg-color-[#bbb] rounded-md p-4 mt-2">
+                        <span className="flex justify-between">
+                            <p>Name</p>
+                            <p>tanggal</p>
+                        </span>
+                        <span>
+                            Comment
+                        </span>
+                    </div>
+                    <div className="bg-color-[#bbb] rounded-md p-4 mt-2">
+                        <span className="flex justify-between">
+                            <p>Name</p>
+                            <p>tanggal</p>
+                        </span>
+                        <span>
+                            Comment
+                        </span>
+                    </div>
+                </div>
+                <CommentBox mal_id={mal_id} user_email={user?.email} username={user?.username} />
             </div>
         </div>
     )

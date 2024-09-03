@@ -18,7 +18,7 @@ const InputSearch = () => {
     }
 
     return (
-        <div className="relative w-full flex items-center justify-center">
+        <div className="w-full flex items-center justify-center">
             <input className="p-2 rounded-md text-sm w-full" onKeyUp={handleSearch} placeholder="cari anime.." ref={searchRef} />
             <button className="absolute top-3 end-2 opacity-50" onClick={handleSearch}>
                 <MagnifyingGlass size={16} />
