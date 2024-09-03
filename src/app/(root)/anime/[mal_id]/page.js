@@ -1,14 +1,31 @@
 import Image from "next/image"
 import { JikanApi } from "@/app/libs/api"
+import CollectionButton from "@/components/AnimeList/CollectionButton"
+import { Auth } from "@/app/libs/auth"
+import prisma from "@/app/libs/prisma"
 
 const SingleAnime = async ({ params: { mal_id } }) => {
     const { data } = await JikanApi(`anime/${mal_id}`)
-    console.log({ data });
+    const user = await Auth();
+    const collection = await prisma.collection.findFirst({ 
+        where: { 
+            user_email: user?.email, 
+            mal_id: mal_id
+        } 
+    });
+
     return (
         <div className="pt-4 px-4">
             <h3 className="text-2xl text-color-primary">
                 {data.title}
             </h3>
+            {
+                user
+                    ? !collection 
+                        ? <CollectionButton mal_id={mal_id} user_email={user?.email} judul_anime={data.title} img_anime={data.images.webp.image_url} />
+                        : <p className="text-color-accent">Already in Collection</p>
+                    : ''
+            }
             <div className="grid md:grid-cols-2 gap-4 grid-cols-1 py-4">
                 <div className="flex flex-col justify-center items-center">
                     <Image className="w-full rounded object-cover max-h-96" src={data.images.webp.image_url} layout="responsive" width={1600} height={900} />
@@ -20,7 +37,9 @@ const SingleAnime = async ({ params: { mal_id } }) => {
                 </div>
                 <div>
                     <div>
-                        <iframe frameborder="0" allowfullscreen="allowfullscreen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" title={data.title_japanese} width={'100%'} height={384} src={data.trailer.embed_url} />
+                        <iframe frameborder="0" allowfullscreen="allowfullscreen" allow="accelerometer; 
+                        --autoplay; 
+                        clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" title={data.title_japanese} width={'100%'} height={384} src={data.trailer.embed_url} />
                     </div>
                 </div>
             </div>
