@@ -24,10 +24,21 @@ model Collection {
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
+  mal_id      String
+  anime_title String
+  anime_img   String
+  user_email  String
+  username    String
+  created_at  DateTime
+  comment     String
+}
+
+model Rating {
+  id         Int    @id @default(autoincrement())
   mal_id     String
   user_email String
-  username   String
-  created_at DateTime
-  comment    String
+  rating     Int
+
+  @@unique([user_email, mal_id])
 }

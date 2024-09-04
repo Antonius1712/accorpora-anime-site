@@ -4,13 +4,20 @@ import CollectionButton from "@/components/AnimeList/CollectionButton"
 import { Auth } from "@/app/libs/auth"
 import prisma from "@/app/libs/prisma"
 import CommentBox from "@/components/Comment/CommentBox"
+import CommentList from "@/components/Comment/CommentList"
 
 const SingleAnime = async ({ params: { mal_id } }) => {
     const { data } = await JikanApi(`anime/${mal_id}`)
     const user = await Auth();
-    const collection = await prisma.collection.findFirst({
+    const collections = await prisma.collection.findFirst({
         where: {
             user_email: user?.email,
+            mal_id: mal_id
+        }
+    });
+
+    const comments = await prisma.comment.findMany({
+        where: {
             mal_id: mal_id
         }
     });
@@ -22,7 +29,7 @@ const SingleAnime = async ({ params: { mal_id } }) => {
             </h3>
             {
                 user
-                    ? !collection
+                    ? !collections
                         ? <CollectionButton mal_id={mal_id} user_email={user?.email} judul_anime={data.title} img_anime={data.images.webp.image_url} />
                         : <p className="text-color-accent">Already in Collection</p>
                     : ''
@@ -54,27 +61,23 @@ const SingleAnime = async ({ params: { mal_id } }) => {
 
             <div className="bg-color-primary rounded-md p-4 flex flex-col">
                 <p className="text-xl">Comments</p>
-                <div className="border-t border-color-dark">
-                    <div className="bg-color-[#bbb] rounded-md p-4 mt-2">
-                        <span className="flex justify-between">
-                            <p>Name</p>
-                            <p>tanggal</p>
-                        </span>
-                        <span>
-                            Comment
-                        </span>
-                    </div>
-                    <div className="bg-color-[#bbb] rounded-md p-4 mt-2">
-                        <span className="flex justify-between">
-                            <p>Name</p>
-                            <p>tanggal</p>
-                        </span>
-                        <span>
-                            Comment
-                        </span>
-                    </div>
-                </div>
-                <CommentBox mal_id={mal_id} user_email={user?.email} username={user?.username} />
+                {/* <div className="border-t border-color-dark">
+                    {comments.map((comment) => {
+                        return (
+                            <div className="bg-color-[#bbb] rounded-md p-4 mt-2">
+                                <span className="flex justify-between">
+                                    <p>{comment.username}</p>
+                                    <p>{new Date(comment.created_at).toLocaleString()}</p>
+                                </span>
+                                <span>
+                                    {comment.comment}
+                                </span>
+                            </div>
+                        )
+                    })}
+                </div> */}
+                <CommentList mal_id={mal_id} anime_title={data.title} anime_img={data.images.webp.image_url} user_email={user?.email} username={user?.name}/>
+                
             </div>
         </div>
     )

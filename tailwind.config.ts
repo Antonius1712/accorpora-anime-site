@@ -19,7 +19,8 @@ const config: Config = {
         primary: "#eeeeee",
         accent: "#ffc539",
         secondary: "#393e46",
-        dark: "#222831"
+        dark: "#222831",
+        red: "#FF0000"
       }
     }
   },

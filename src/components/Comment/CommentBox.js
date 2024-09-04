@@ -13,9 +13,7 @@ const CommentBox = ({ mal_id, user_email, username }) => {
     const HandleSubmit = async (e) => {
         e.preventDefault();
 
-        const created_at = (date = new Date()) => {
-            return date.toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' });
-        };
+        const created_at = new Date().toISOString();
 
         const data = { mal_id, user_email, username, created_at, comment };
 
@@ -27,13 +25,14 @@ const CommentBox = ({ mal_id, user_email, username }) => {
         const comments = await response.json();
         if (comments.status == 200) {
             setIsCreated(!isCreated);
+            setComment("");
         }
         return
     }
 
     return (
         <div>
-            <textarea onChange={HandleComment} className="w-full mt-2 p-4 rounded-md"></textarea>
+            <textarea onChange={HandleComment} value={comment} className="w-full mt-2 p-4 rounded-md"></textarea>
             <button onClick={HandleSubmit} className="bg-color-secondary text-color-primary rounded-md px-4 py-2">
                 Tulis Komentar
             </button>
