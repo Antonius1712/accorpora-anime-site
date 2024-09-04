@@ -1,5 +1,4 @@
 import NextAuth from "next-auth/next";
-// import AuthOptions from "@/lib/AuthOptions";
 import githubAuth from "next-auth/providers/github"
 
 const AuthOptions = {
