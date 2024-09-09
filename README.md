@@ -2,6 +2,12 @@
 
 Accorpora Anime Site is a web application that allows users to search and watch anime. It includes features such as popular anime listings, pagination, user login via GitHub, and personal anime collections with the ability to leave comments.
 
+## Preview
+
+You can view a live demo of the Accorpora Anime Site at the following URL:
+
+- [Accorpora Anime Site Preview](https://accorpora-anime-site.vercel.app/)
+
 ## Features
 
 - **Search and Watch Anime**: Users can search for their favorite anime and watch available episodes.
