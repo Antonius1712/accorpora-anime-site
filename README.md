@@ -101,5 +101,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-For any questions or feedback, feel free to reach out via [GitHub Issues](https://github.com/Antonius1712/accorpora-anime-site/issues).
+For any questions or feedback, feel free to reach out:
+
+- **Email**: antonius1712@gmail.com
+- **Phone**: +6281297275563
+- **LinkedIn**: [Antonius Christian](https://www.linkedin.com/in/antonius-christian/)
+
+You can also report issues or ask questions on the [GitHub Issues page](https://github.com/Antonius1712/accorpora-anime-site/issues).
 
